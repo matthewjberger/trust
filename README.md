@@ -1,3 +1,7 @@
+---
+marp: true
+---
+
 <!--
 theme: default
 class:
