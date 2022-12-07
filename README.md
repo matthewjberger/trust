@@ -9,7 +9,6 @@ class:
  - invert
 headingDivider: 2 
 paginate: true
-size: 4:3
 -->
 
 <!--
@@ -239,9 +238,7 @@ To represent an error when interacting with an animal, we can create a custom er
 -->
 
 ```rust
-struct AnimalError {
-    details: String,
-}
+struct AnimalError { details: String }
 impl AnimalError {
     fn new(msg: &str) -> Self {
         Self { details: msg.to_string() }
