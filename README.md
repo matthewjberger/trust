@@ -180,12 +180,26 @@ What if the dog already has a bone?
 What if the dog doesn't like the flavor?
 What if the dog refuses to take the bone?
 
-We'll need a way to handle fallibility in our program.
+We'll need a way to handle fallibility in our program, but first we have to discuss ownership and borrowing.
 -->
 
 * What if the dog already has a bone?
 * What if the dog doesn't like the flavor?
 * What if the dog refuses to take the bone?
+
+## Ownership and Borrowing
+
+<!--
+Data in rust can only have one owner. Many immutable (read-only) references or a single mutable (read-only) reference to the data can be in use at any given time.
+-->
+
+- Data can only have one owner
+    - Many readers
+- `T` is a type
+- `&T` is an immutable ref to `T`
+  - No limit on simultaneous immutable refs unless a mutable ref exists
+- `&mut T` is a mutable ref to `T`
+  - Limit of only one at a time
 
 ## Results and Errors
 
