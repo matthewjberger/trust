@@ -1,5 +1,5 @@
 <!--
-theme: gaia
+theme: default
 class:
  - invert
 headingDivider: 2 
