@@ -435,11 +435,11 @@ fn main() -> Result<()> {
 <!--
 Earlier we mentioned that we could get debug representations of types by implementing the Debug trait.
 
-Luckily, there is an easy way to automatically derive this trait for structs made of primitives or other structs that implement Debug that we can add to the rest of our structs and plain enums.
+Add the #[derive(Debug)] attribute to any struct or plain enum you want to print debug string output for. Its members must also all implement Debug, and Debug is already implemented for all primitives and most types from the standard library.
 -->
 
 ```rust
-#[derive(Debug)] // <-- Add this to any struct or plain enum you want to print debug string output for
+#[derive(Debug)] 
 struct AnimalError {
     details: String,
 }
