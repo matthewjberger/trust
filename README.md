@@ -354,7 +354,7 @@ struct AnimalError {
 
 ## Final Program
 
-Available on the [rust playground](https://gist.github.com/ab843b1835c9cd453f1c4ca952f73f9a) 🚀
+Available on the [rust playground](https://play.rust-lang.org/?version=stable&mode=debug&edition=2021&gist=b735ea28ccb9bb82ee03621e46edacb8) 🚀
 
 ![](img/playground.png)
 
