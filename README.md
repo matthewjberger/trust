@@ -3,11 +3,13 @@ marp: true
 ---
 
 <!--
-theme: uncover
+theme: default
 class:
+ - lead
  - invert
 headingDivider: 2 
 paginate: true
+size: 4:3
 -->
 
 <!--
@@ -61,7 +63,7 @@ rustup default stable # Install and use the latest stable rust toolchain
 
 ## Creating a Project
 
-```
+```bash
 cargo new learn-rust
 cd learn-rust
 cargo run -r
