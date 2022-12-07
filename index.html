@@ -109,17 +109,12 @@ cargo run -r
 </section>
 </foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 960 720"><foreignObject width="960" height="720"><section id="8" data-class="lead invert" data-paginate="true" data-theme="gaia" data-heading-divider="2" class="lead invert" data-marpit-pagination="8" data-marpit-pagination-total="24" style="--class:lead invert;--paginate:true;--theme:gaia;--heading-divider:2;" data-size="4:3">
 <h2>Constructors</h2>
-<pre><code class="language-rust"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Dog</span></span> {
-    age: <span class="hljs-built_in">u8</span>,
-}
+<pre><code class="language-rust"><svg data-marp-fitting="svg" data-marp-fitting-code><foreignObject><span data-marp-fitting-svg-content><span data-marp-fitting-svg-content-wrap><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">Dog</span></span> { age: <span class="hljs-built_in">u8</span> }
 <span class="hljs-keyword">impl</span> Dog {
     <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">new</span></span>(age: <span class="hljs-built_in">u8</span>) -&gt; <span class="hljs-keyword">Self</span> {
         <span class="hljs-keyword">Self</span> { age }
     }
-    <span class="hljs-keyword">pub</span> <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">celebrate_birthday</span></span>(&amp;<span class="hljs-keyword">mut</span> <span class="hljs-keyword">self</span>) {
-        <span class="hljs-keyword">self</span>.age = <span class="hljs-keyword">self</span>.age + <span class="hljs-number">1</span>;
-        <span class="hljs-built_in">println!</span>(<span class="hljs-string">&quot;Fluffy is {} years old!&quot;</span>, <span class="hljs-keyword">self</span>.age);
-    }
+    <span class="hljs-comment">// ...</span>
 }
 <span class="hljs-function"><span class="hljs-keyword">fn</span> <span class="hljs-title">main</span></span>() {
     <span class="hljs-keyword">let</span> <span class="hljs-keyword">mut</span> dog = Dog::new(<span class="hljs-number">8</span>);
