@@ -16,118 +16,232 @@ _class:
  - invert
 -->
 
-# Deploy Marp to GitHub Pages
+# A Crash Course in Rust 🦀
 
-Presentations to Webpages: Instantly!
+Let's learn [Rust](https://www.rust-lang.org/) together
 
-## What?
+## What is Rust?
 
-[Marp](https://marp.app/) lets you create HTML slides from markdown (like this!).
+- Systems programming language
+- Strongly typed
+- No garbage collector
+- Immutable by default
+- Memory safety is checked at compile time
+  - Prevents `undefined behavior`
+    - Use after free (dereferencing a null pointer)
+    - Data races
+- Async/Await for high performance apps
+  - Core IPC message broker
+- Package management
+- Workspace configuration
 
-This presentation is both a [website](https://alexsci.com/marp-to-pages) and a [README.md](https://github.com/ralexander-phi/marp-to-pages/blob/main/README.md).
+## Installation
 
-## Why?
+- [Rustup](https://rustup.rs/)
 
-Treat your presentation the same way you treat code.
-
-- Use git to track changes
-- Pull requests to collaborate
-- Deploy automatically
-- See a problem? Open an issue!
-
-## Setup
-
-Want to create your own?
-
-First, create a new repo [from the template repo](https://github.com/ralexander-phi/marp-to-pages).
-
-![](img/use-template.png)
-
-## Configure GitHub Pages
-
-Open your new repo and [setup publishing](https://help.github.com/en/github/working-with-github-pages/configuring-a-publishing-source-for-your-github-pages-site#choosing-a-publishing-source).
-
-You'll typically use `gh-pages` as the deploy branch.
-
-## Review Build
-
-Click on Actions tab and see if the build succeeded (it may take some time).
-
-![](img/click-actions.png)
-
-You should now see the generated files in the `gh-pages` branch.
-
-## View webpage
-
-Open your deployed webpage to see the content.
-
-Out of the box you should see `README.md` as `/index.html` and `/README.pdf`. Slides under `docs/` are also converted.
-
-## Running locally
-
-Locally you'll run commands like:
-
-```
-$ marp README.md -o build/README.pdf
+```bash
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup default stable # Install and use the latest stable rust toolchain
 ```
 
-or
+## Tooling
+
+- `vscode`
+- `rust-analyzer` extension
+
+## Creating a Project
 
 ```
-$ npx @marp-team/marp-cli@latest README.md -o build/README.pdf
+cargo new learn-rust
+cd learn-rust
+cargo run -r
 ```
 
-## As a workflow step
+## Data Structures
 
-The workflow runs an equivalent step:
+<!-- Everyone loves pets, so let's start by adding a pet to our project. -->
 
+:dog: 
+
+```rust
+// main.rs
+struct Dog;
+
+fn main() {
+    let _dog = Dog {};
+
+    println!("Hello, world!");
+}
 ```
-- name: Marp Build (README.pdf)
-  uses: docker://marpteam/marp-cli:v1.7.0
-  with:
-    args: README.md -o build/README.pdf
-  env:
-    MARP_USER: root:root
-```
 
-Note the `args` match the previous slide.
+## Mutability, Functions, and Birthdays
 
-## Customizing the build
+<!-- 
+  Let's give our dog an age and make it possible for them to celebrate their birthday. 
+  Note that we have to add the mut keyword to the dog to be able to mutate it. In this case, the mutation is incrementing its age when celebrating its birthday.
 
-Anything in the `build/` folder will be deployed to GitHub Pages.
-
-You can copy extra files or run further processing steps using other tools.
-
-## Learn more about Marp
-
-This is a good time to learn more about Marp. Here's some resources:
-
-- [CommonMark](https://commonmark.org/)
-- [Cheat Sheet](https://commonmark.org/help/)
-- [Themes](https://github.com/marp-team/marp-core/tree/master/themes)
-- [CSS Themes](https://marpit.marp.app/theme-css)
-- [Directives](https://marpit.marp.app/directives)
-- [VS Code plugin](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
-
-## Example Sites
-
-Known sites using this action are:
-
-- [University of Illinois at Urbana-Champaign's CS 199 Even More Practice](https://cs199emp.netlify.app/) [(code)](https://github.com/harsh183/emp-125)
-- [Exploring agent based models](https://roiarthurb.github.io/Talk-UMMISCO_06-07-2020/) [(code)](https://github.com/RoiArthurB/Talk-UMMISCO_06-07-2020)
-
-Send a [pull request](https://github.com/ralexander-phi/marp-to-pages) to get your site added.
-
-## Publish your slides
-
-When you are ready to share your presentation, commit or merge to `main` and your content on GitHub Pages will automatically update.
-
-# 🎉
-<!--
-_class:
- - lead
- - invert
+  In Rust, objects are immutable by default.
 -->
-### Hooray!
 
+🎂
 
+```rust
+struct Dog {
+    age: u8,
+}
+
+impl Dog {
+    pub fn celebrate_birthday(&mut self) {
+        self.age = self.age + 1;
+        println!("Fluffy is {} years old!", self.age);
+    }
+}
+
+fn main() {
+    let mut dog = Dog { age: 8 };
+    dog.celebrate_birthday();
+}
+```
+
+## Constructors
+
+<!--
+Constructors in Rust are just functions that return an instance of an object. They are not treated specially by the language itself like they are in C++.
+
+Because they do not take `self` as a parameter,
+they are considered `associated functions` instead of `methods`.
+-->
+
+```rust
+struct Dog {
+    age: u8,
+}
+
+impl Dog {
+    pub fn new(age: u8) -> Self {
+        Self { age }
+    }
+
+    pub fn celebrate_birthday(&mut self) {
+        self.age = self.age + 1;
+        println!("Wiggly butt is {} wags old!", self.age);
+    }
+}
+
+fn main() {
+    let mut dog = Dog::new(8);
+    dog.celebrate_birthday();
+}
+```
+
+## Enumerations
+
+<!-- Now we can add an enumeration to our program the represents various bone flavors. -->
+
+```rust
+enum BoneKind {
+    Bacon,
+    PeanutButter,
+    Turkey,
+}
+```
+
+## Option
+
+<!--
+Now we need a way to represent the dog having a bone or not having a bone.
+We can represent this using the `Option` type.
+
+`Option` is a generic enumeration with two variants.
+-->
+
+```rust
+pub enum Option<T> {
+  None,
+  Some(T),
+}
+```
+
+## Optional Fields
+
+<!-- Let's add an optional `bone` field to our `Dog`. -->
+
+```rust
+struct Dog {
+    age: u8,
+    pub bone: Option<Bone>,
+}
+
+impl Dog {
+    pub fn new(age: u8) -> Self {
+        Self { age, bone: None }
+    }
+
+    // ...
+}
+
+fn main() {
+    // ...
+}
+```
+
+## Wait a second...
+
+<!--
+Now our dog can hold onto a Bone!
+
+However, things get more complicated when we want to start giving and taking bones.
+
+What if the dog already has a bone?
+What if the dog doesn't like the flavor?
+What if the dog refuses to take the bone?
+
+In the next section, we'll cover how to handle fallibility in our program.
+
+First, we will take a look at the full program so far.
+-->
+
+* What if the dog already has a bone?
+* What if the dog doesn't like the flavor?
+* What if the dog refuses to take the bone?
+
+## Full Program
+
+```rust
+struct Dog {
+    age: u8,
+    pub bone: Option<Bone>,
+}
+
+impl Dog {
+    pub fn new(age: u8) -> Self {
+        Self { age, bone: None }
+    }
+
+    pub fn celebrate_birthday(&mut self) {
+        self.age = self.age + 1;
+        println!("Wiggly butt is {} wags old!", self.age);
+    }
+}
+
+struct Bone {
+    kind: BoneKind,
+}
+
+impl Bone {
+    pub fn new(kind: BoneKind) -> Self {
+        Self { kind }
+    }
+}
+
+enum BoneKind {
+    BaconFlavored,
+    TurkeyAndStuffing,
+    PeanutButter,
+}
+
+fn main() {
+    let mut dog = Dog::new(8);
+    dog.celebrate_birthday();
+}
+```
