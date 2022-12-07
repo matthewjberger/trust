@@ -44,8 +44,8 @@ rustup default stable # Install and use the latest stable rust toolchain
 
 ## Tooling
 
-<!-- >
-  - Language server for rust that provides IDE like features using JSON-RPC with editor plugins that support Microsoft's language server schema.
+<!--
+  Language server for rust that provides IDE like features using JSON-RPC with editor plugins that support Microsoft's language server schema.
 -->
 
 - Visual Studio Code
@@ -85,10 +85,7 @@ fn main() {
 ## Mutability
 
 <!-- 
-  Let's give our dog an age and make it possible for them to celebrate their birthday. 
-  Note that we have to add the mut keyword to the dog to be able to mutate it. In this case, the mutation is incrementing its age when celebrating its birthday.
-
-  In Rust, objects are immutable by default.
+  Let's give our dog an age and make it possible for them to celebrate their birthday. Note that we have to add the mut keyword to the dog to be able to mutate it. In this case, the mutation is incrementing its age when celebrating its birthday. In Rust, objects are immutable by default.
 -->
 
 ```rust
@@ -112,10 +109,7 @@ fn main() {
 ## Constructors
 
 <!--
-Constructors in Rust are just functions that return an instance of an object. They are not treated specially by the language itself like they are in C++.
-
-Because they do not take `self` as a parameter,
-they are considered `associated functions` instead of `methods`.
+Constructors in Rust are just functions that return an instance of an object. They are not treated specially by the language itself like they are in C++. Because they do not take `self` as a parameter, they are considered `associated functions` instead of `methods`.
 -->
 
 ```rust
@@ -148,9 +142,7 @@ enum BoneKind {
 
 <!--
 Now we need a way to represent the dog having a bone or not having a bone.
-We can represent this using the `Option` type.
-
-`Option` is a generic enumeration with two variants.
+We can represent this using the `Option` type. `Option` is a generic enumeration with two variants.
 -->
 
 ```rust
@@ -199,9 +191,7 @@ We'll need a way to handle fallibility in our program.
 ## Results and Errors
 
 <!--
-Now we want to be able to give the dog a bone and take it away to throw for fetching. These operations can fail for various reasons.
-
-We can represent fallible operations by making them return a Result type, and we will specify our own Error type.
+Now we want to be able to give the dog a bone and take it away to throw for fetching. These operations can fail for various reasons. We can represent fallible operations by making them return a Result type, and we will specify our own Error type.
 -->
 
  How do we represent errors in Rust?
@@ -229,11 +219,7 @@ enum Result<T, E> {
 <!--
 To understand the next section explaining errors, we'll need to discuss the concept of traits. Traits are like interfaces in other languages, except in Rust, traits only specify behavior and not data. Traits only represent functions and not variables. There is a `std::error::Error` trait that the Result type uses as a type-constraint on its generic Error parameter. Result can generically accept error types if they are trait objects that implement the `std::error::Error` trait.
 
-For us to create a custom error type we have to implement the `std::error::Error` trait on our AnimalError custom error type.
-
-We can implement other similar traits as well, such as Display. Display specifies how an object should present itself in a user-facing for text. The equivalent for debugging is called Debug.
-
-Traits allow rust to use dynamic dispatch, which is the process of selecting which implementation of a polymorphic operation (method or function) to call at run time.
+For us to create a custom error type we have to implement the `std::error::Error` trait on our AnimalError custom error type. We can implement other similar traits as well, such as Display. Display specifies how an object should present itself in a user-facing for text. The equivalent for debugging is called Debug. Traits allow rust to use dynamic dispatch, which is the process of selecting which implementation of a polymorphic operation (method or function) to call at run time.
 -->
 
 - What are traits?
@@ -249,9 +235,7 @@ Traits allow rust to use dynamic dispatch, which is the process of selecting whi
 ## Custom Errors
 
 <!--
-To represent an error when interacting with an animal, we can create a custom error type.
-Here we have a custom `AnimalError` type that stores a string for error details.
-We also implement Display on it so it can be printed to the console.
+To represent an error when interacting with an animal, we can create a custom error type. Here we have a custom `AnimalError` type that stores a string for error details. We also implement Display on it so it can be printed to the console.
 -->
 
 ```rust
@@ -292,10 +276,7 @@ pub type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 <!--
 In rust, a `Box` is a smart pointer to a heap allocated value of a particular type. This is a value on the `stack` that holds the starting address of a contiguous region of `heap` memory as well as its length. When a box goes out of scope, its destructor is called, the inner object is destroyed, and the memory on the heap is freed. This prevents double free and use after free errors without any extra code.
 
-Rust must know the sizes of all values on the stack at compile time.
-Trait objects can vary greatly in size depending on what data structures
-they are implemented for. To make them all a known size at compile time,
-they are contained in a `Box`.
+Rust must know the sizes of all values on the stack at compile time. Trait objects can vary greatly in size depending on what data structures they are implemented for. To make them all a known size at compile time, they are contained in a `Box`.
 -->
 
 ## Writing Fallible Methods
@@ -339,11 +320,7 @@ pub fn speak(&self) -> Result<()> {
 ## Happy Birthday, Fluffy! 🍰🐕
 
 <!-- 
-Now we can invoke these methods in main with a slight change to the return type of main.
-Note that the ? operator can invoke fallible methods and forward their errors to the caller if they fail. We can call dog.speak()? now because main has a return type of Result<()>.
-
-The function must return a Result, so at the end we use the Ok() variant of Result
-with the empty type represented by a pair of parentheses like in the signature.
+Now we can invoke these methods in main with a slight change to the return type of main. Note that the ? operator can invoke fallible methods and forward their errors to the caller if they fail. We can call dog.speak()? now because main has a return type of Result<()>. The function must return a Result, so at the end we use the Ok() variant of Result with the empty type represented by a pair of parentheses like in the signature.
 -->
 
 
@@ -393,5 +370,4 @@ Available on the [rust playground](https://gist.github.com/ab843b1835c9cd453f1c4
   - Large list of learning resources
 
 <!-- 
-Rustup doc will open a page in the browser containing a large collection of standard, official documentation and rust learning resources.
--->
+Rustup doc will open a page in the browser containing a large collection of standard, official documentation and rust learning resources.  -->
