@@ -24,18 +24,14 @@ Let's learn [Rust](https://www.rust-lang.org/) together.
 
 ## What is Rust?
 
-- Systems programming language
-- Strongly typed
+- Strongly typed systems programming language
 - No garbage collector
-- Immutable by default
 - Memory safety is checked at compile time
   - Prevents `undefined behavior`
-    - Use after free (dereferencing a null pointer)
-    - Data races
+    - Use after free, data races, etc 
 - Async/Await for high performance apps
   - Core IPC message broker
 - Package management
-- Workspace configuration
 
 ## Installation
 
