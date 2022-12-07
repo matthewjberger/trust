@@ -123,17 +123,12 @@ they are considered `associated functions` instead of `methods`.
 -->
 
 ```rust
-struct Dog {
-    age: u8,
-}
+struct Dog { age: u8 }
 impl Dog {
     pub fn new(age: u8) -> Self {
         Self { age }
     }
-    pub fn celebrate_birthday(&mut self) {
-        self.age = self.age + 1;
-        println!("Fluffy is {} years old!", self.age);
-    }
+    // ...
 }
 fn main() {
     let mut dog = Dog::new(8);
