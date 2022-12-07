@@ -187,19 +187,23 @@ We'll need a way to handle fallibility in our program, but first we have to disc
 * What if the dog doesn't like the flavor?
 * What if the dog refuses to take the bone?
 
-## Ownership and Borrowing
+## Borrowing, Ownership, and Lifetimes
 
 <!--
 Data in rust can only have one owner. Many immutable (read-only) references or a single mutable (read-only) reference to the data can be in use at any given time.
+
+Lifetimes represent how long an object is guaranteed to be in-memory for. Rust uses lifetime annotations at compile time to check borrows and prevent stale references.
 -->
 
 - Data can only have one owner
-    - Many readers
 - `T` is a type
-- `&T` is an immutable ref to `T`
-  - No limit on simultaneous immutable refs unless a mutable ref exists
+- `&T` is an immutable ref to `T`, referred to as borrowing
+  - N number of immutable refs allowed unless a mutable ref exists
 - `&mut T` is a mutable ref to `T`
   - Limit of only one at a time
+- `&'static mut T` is a mutable ref to `T` with a `'static` lifetime
+  - Guaranteed to live for the duration of the program
+
 
 ## Results and Errors
 
