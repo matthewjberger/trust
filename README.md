@@ -3,7 +3,7 @@ marp: true
 ---
 
 <!--
-theme: default
+theme: uncover
 class:
  - invert
 headingDivider: 2 
