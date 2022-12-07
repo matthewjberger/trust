@@ -426,7 +426,7 @@ fn main() -> Result<()> {
 }
 ```
 
-- What is `?` ????
+- What is `?` ?
   - Sugar for methods returning `Result`
   - Propagates error to the caller if they fail
 
