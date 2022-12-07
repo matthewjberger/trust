@@ -3,7 +3,7 @@ marp: true
 ---
 
 <!--
-theme: default
+theme: gaia
 class:
  - lead
  - invert
@@ -86,7 +86,7 @@ fn main() {
 }
 ```
 
-## Mutability, Functions, and Birthdays
+## Mutability
 
 <!-- 
   Let's give our dog an age and make it possible for them to celebrate their birthday. 
@@ -94,8 +94,6 @@ fn main() {
 
   In Rust, objects are immutable by default.
 -->
-
-🎂
 
 ```rust
 struct Dog {
@@ -128,18 +126,15 @@ they are considered `associated functions` instead of `methods`.
 struct Dog {
     age: u8,
 }
-
 impl Dog {
     pub fn new(age: u8) -> Self {
         Self { age }
     }
-
     pub fn celebrate_birthday(&mut self) {
         self.age = self.age + 1;
-        println!("Wiggly butt is {} wags old!", self.age);
+        println!("Fluffy is {} years old!", self.age);
     }
 }
-
 fn main() {
     let mut dog = Dog::new(8);
     dog.celebrate_birthday();
@@ -190,11 +185,6 @@ impl Dog {
     }
 
     // ...
-}
-
-fn main() {
-    // ...
-}
 ```
 
 ## Wait a second...
@@ -208,55 +198,12 @@ What if the dog already has a bone?
 What if the dog doesn't like the flavor?
 What if the dog refuses to take the bone?
 
-In the next section, we'll cover how to handle fallibility in our program.
-
-First, we will take a look at the full program so far.
+We'll need a way to handle fallibility in our program.
 -->
 
 * What if the dog already has a bone?
 * What if the dog doesn't like the flavor?
 * What if the dog refuses to take the bone?
-
-## Full Program
-
-```rust
-struct Dog {
-    age: u8,
-    pub bone: Option<Bone>,
-}
-
-impl Dog {
-    pub fn new(age: u8) -> Self {
-        Self { age, bone: None }
-    }
-
-    pub fn celebrate_birthday(&mut self) {
-        self.age = self.age + 1;
-        println!("Wiggly butt is {} wags old!", self.age);
-    }
-}
-
-struct Bone {
-    kind: BoneKind,
-}
-
-impl Bone {
-    pub fn new(kind: BoneKind) -> Self {
-        Self { kind }
-    }
-}
-
-enum BoneKind {
-    BaconFlavored,
-    TurkeyAndStuffing,
-    PeanutButter,
-}
-
-fn main() {
-    let mut dog = Dog::new(8);
-    dog.celebrate_birthday();
-}
-```
 
 ## Results and Errors
 
@@ -266,14 +213,18 @@ Now we want to be able to give the dog a bone and take it away to throw for fetc
 We can represent fallible operations by making them return a Result type, and we will specify our own Error type.
 -->
 
-- How do we represent errors in Rust?
+ How do we represent errors in Rust?
+
 - Scenario 1
-  - We take a bone but the dog does not have one. What should we get back?
-    - We can return a `None` variant of `Option` to represent the absence of the bone.
+  - Take a bone from a dog that is without one
+      - `None` represents the absence of the bone
 - Scenario 2
-  - We give a dog a bone, but it already has one? What should we get back?
-    - We can return the `Err` variant of a `Result` type, to represent an error.
-- `Result` can represent fallible operations
+  - Give one and then another bone to a dog
+    - We can return `Err` to represent an error
+
+## Result
+
+<!-- Result is a generic enum that requires a type to use for the result T and the possible error E -->
 
 ```rust
 enum Result<T, E> {
@@ -285,7 +236,7 @@ enum Result<T, E> {
 ## Traits
 
 <!--
-To understand the next section explaining errors, we'll need to discuss the concept of traits. Traits are like interfaces in other languages, except in Rust, traits only specify behavior and not data. Traits only represent functions and not variables. There is a `std::error::Error` trait that the Result type uses as a type-constraint on its generic Error parameter. Result can only accept error types that implement the `std::error::Error` trait.
+To understand the next section explaining errors, we'll need to discuss the concept of traits. Traits are like interfaces in other languages, except in Rust, traits only specify behavior and not data. Traits only represent functions and not variables. There is a `std::error::Error` trait that the Result type uses as a type-constraint on its generic Error parameter. Result can generically accept error types if they are trait objects that implement the `std::error::Error` trait.
 
 For us to create a custom error type we have to implement the `std::error::Error` trait on our AnimalError custom error type.
 
@@ -298,13 +249,11 @@ Traits allow rust to use dynamic dispatch, which is the process of selecting whi
   - Similar to interfaces
   - Only specify behavior and not data
   - Not inheritance
-  - Allows for dynamic dispatch of types
+  - Allows for dynamic dispatch
     - i.e `Vec<Box<dyn Animal>>`
 - Built-In Rust traits
   - Default
   - Display
-  - Copy
-  - Clone
 
 ## Custom Errors
 
@@ -318,21 +267,14 @@ We also implement Display on it so it can be printed to the console.
 struct AnimalError {
     details: String,
 }
-
 impl AnimalError {
     fn new(msg: &str) -> Self {
-        Self {
-            details: msg.to_string(),
-        }
+        Self { details: msg.to_string() }
     }
 }
-
 impl std::error::Error for AnimalError {
-    fn description(&self) -> &str {
-        &self.details
-    }
+    fn description(&self) -> &str { &self.details }
 }
-
 impl std::fmt::Display for AnimalError {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
         write!(f, "{}", self.details)
@@ -344,15 +286,13 @@ impl std::fmt::Display for AnimalError {
 
 <!-- To prevent us from having to write the full signature for a Result that uses our custom error type, we can create a type alias at the module root to shorten the signature. -->
 
-Declare function aliases to abbreviate ubiquitous types.
+Declare function aliases to abbreviate types
 
 ```rust
 pub type Result<T, E = Box<dyn std::error::Error>> = std::result::Result<T, E>;
 ```
 
-Box?
-
-### Smart Pointers in Rust
+## Smart Pointers in Rust
 
 - What is a `Box`?
   - Just a smart pointer 🧠👈😎
@@ -415,6 +355,7 @@ The function must return a Result, so at the end we use the Ok() variant of Resu
 with the empty type represented by a pair of parentheses like in the signature.
 -->
 
+
 ```rust
 fn main() -> Result<()> {
     let mut dog = Dog::new(8);
@@ -428,9 +369,8 @@ fn main() -> Result<()> {
 }
 ```
 
-- What is `?` ?
-  - Sugar for methods returning `Result`
-  - Propagates error to the caller if they fail
+- `?` operator propagates error to the caller
+
 
 ## Debug Output
 
